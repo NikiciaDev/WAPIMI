@@ -106,6 +106,8 @@ private:
 						break;
 					}
 				} while(Module32Next(hSnapshot, &me));
+			} else {
+				std::cerr << "Failed to enumerate modules! Error code: " << GetLastError() << std::endl;
 			}
 		}
 		if(hSnapshot) CloseHandle(hSnapshot);
