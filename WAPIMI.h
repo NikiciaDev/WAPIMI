@@ -7,7 +7,7 @@
 typedef NTSTATUS(WINAPI* pNtReadVirtualMemory)(HANDLE ProcessHandle, PVOID BaseAddress, PVOID Buffer, ULONG NumberOfBytesToRead, PULONG NumberOfBytesRead);
 typedef NTSTATUS(WINAPI* pNtWriteVirtualMemory)(HANDLE Processhandle, PVOID BaseAddress, PVOID Buffer, ULONG NumberOfBytesToWrite, PULONG NumberOfBytesWritten);
 
-class Memory {
+class WAPIMI {
 private:
 	pNtReadVirtualMemory MRead;
 	pNtWriteVirtualMemory MWrite;
@@ -17,7 +17,7 @@ private:
 	DWORD baseAdress;
 
 public:
-	Memory(std::string processName) : processName(processName) {
+	WAPIMI(std::string processName) : processName(processName) {
 		MRead = (pNtReadVirtualMemory) GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtReadVirtualMemory");
 		MWrite = (pNtWriteVirtualMemory) GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtWriteVirtualMemory");
 		setPH();
@@ -62,7 +62,7 @@ public:
 		return baseAdress;
 	}
 
-	~Memory() {
+	~WAPIMI() {
 		if(handle) CloseHandle(handle);
 	}
 
