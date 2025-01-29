@@ -14,7 +14,7 @@ private:
 	std::string processName;
 	DWORD pid;
 	HANDLE handle;
-	DWORD baseAdress;
+	uintptr_t baseAdress;
 
 public:
 	WAPIMI(std::string processName) : processName(processName) {
@@ -66,7 +66,7 @@ public:
 		if(handle) CloseHandle(handle);
 	}
 
-private: 
+private:
 	void setPH() {
 		HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
 
@@ -102,7 +102,7 @@ private:
 			if(Module32First(hSnapshot, &me)) {
 				do {
 					if(std::wstring(me.szModule) == std::wstring(processName.begin(), processName.end())) {
-						baseAdress = (DWORD) me.modBaseAddr;
+						baseAdress = (uintptr_t) me.modBaseAddr;
 						break;
 					}
 				} while(Module32Next(hSnapshot, &me));
