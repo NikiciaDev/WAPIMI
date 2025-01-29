@@ -17,11 +17,13 @@ private:
 	uintptr_t baseAdress;
 
 public:
-	WAPIMI() { }
-
-	WAPIMI(std::string processName) : processName(processName) {
+	WAPIMI() {
 		MRead = (pNtReadVirtualMemory) GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtReadVirtualMemory");
 		MWrite = (pNtWriteVirtualMemory) GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtWriteVirtualMemory");
+	}
+
+	void init(std::string processNameIn) {
+		processName = processNameIn;
 		setPH();
 		setBase();
 	}
