@@ -17,6 +17,8 @@ private:
 	uintptr_t baseAdress;
 
 public:
+	WAPIMI() { }
+
 	WAPIMI(std::string processName) : processName(processName) {
 		MRead = (pNtReadVirtualMemory) GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtReadVirtualMemory");
 		MWrite = (pNtWriteVirtualMemory) GetProcAddress(GetModuleHandleA("ntdll.dll"), "NtWriteVirtualMemory");
